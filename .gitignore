@@ -4,8 +4,6 @@
 .vscode/
 
 # production
-./server/site.db
-
 *.pyc
 
 # misc
