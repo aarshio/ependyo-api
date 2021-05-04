@@ -5,6 +5,7 @@
 
 # production
 *.pyc
+config.json
 
 # misc
 .DS_Store
