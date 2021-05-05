@@ -163,13 +163,23 @@ def delete_post():
          post = Post.query.get(data['post_id'])
          item = Item.query.get(post.post_item)
          new_rating = {}
-         if(item.num_posts > 1):
-            for feature in ['design', 'durability', 'camera', 'features', 'battery', 'performance', 'overall']:
-                    new_rating[feature] = round(((item.rating[feature] * item.num_posts) - post.rating[feature])/(item.num_posts-1), 2)
-        
-         if(item.num_posts == 1):
-            for feature in ['design', 'durability', 'camera', 'features', 'battery', 'performance', 'overall']:
-                    new_rating[feature] = -1
+         try:
+             if(item.num_posts > 1):
+                 for feature in ['design', 'durability', 'camera', 'features', 'battery', 'performance', 'overall']:
+                         try: new_rating[feature] = round(((item.rating[feature] * item.num_posts) - post.rating[feature])/(item.num_posts-1), 2)
+                         except: new_rating[feature] = -1
+             if(item.num_posts == 1):
+                 for feature in ['design', 'durability', 'camera', 'features', 'battery', 'performance', 'overall']:
+                         new_rating[feature] = -1
+         except:
+             new_rating['design'] = -1
+             new_rating['durability'] = -1
+             new_rating['camera'] = -1
+             new_rating['features'] = -1
+             new_rating['battery'] = -1
+             new_rating['performance'] = -1
+             new_rating['overall'] = -1
+         
          item.num_posts -= 1
          item.rating = new_rating    
 
